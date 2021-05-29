@@ -10,4 +10,13 @@ var loadPage = function () {
   $("#currentDay").append(day);
 };
 
+//Save a new event on the schedule
+$(".saveBtn").click(function (event) {
+  event.preventDefault();
+
+  //get form values
+  var text = $("text").val();
+  console.log(event.target);
+});
+
 loadPage();
