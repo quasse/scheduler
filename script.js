@@ -11,12 +11,12 @@ var loadPage = function () {
 };
 
 //Save a new event on the schedule
-$(".saveBtn").click(function (event) {
+$(".event-row").submit(function (event) {
   event.preventDefault();
 
+  var eventId = $(this).attr("event-form-id");
   //get form values
-  var text = $("text").val();
-  console.log(event.target);
+  console.log(eventId);
 });
 
 loadPage();
