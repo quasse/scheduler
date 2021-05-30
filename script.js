@@ -10,13 +10,24 @@ var loadPage = function () {
   $("#currentDay").append(day);
 };
 
+// Event text was changed
+$(".event-text").on("change", function () {
+  var newText = $(this).val();
+
+  var eventTextArea = $(this)
+    .addClass("col-9 present event-text")
+    .text(newText);
+
+  $(this).find("textarea").replaceWith(eventTextArea);
+});
+
 //Save a new event on the schedule
 $(".event-row").submit(function (event) {
   event.preventDefault();
 
-  var eventId = $(this).attr("event-form-id");
-  //get form values
-  console.log(eventId);
+  var text = $(this).find("textarea").text();
+
+  console.log(text);
 });
 
 loadPage();
