@@ -8,6 +8,26 @@ var loadPage = function () {
 
   //Place day in header
   $("#currentDay").append(day);
+
+  //load event elements onto page
+  var events = $("#schedule").children();
+
+  var currentTime = moment().format("H");
+  console.log("curent time is " + currentTime);
+
+  //Loop through elements to add correct color TODO and event description if saved
+  for (var i = 0; i < events.length; i++) {
+    var eventEl = $(events[i]);
+    var timeEl = eventEl.text().trim();
+    var timeMoment = moment(timeEl, "H A");
+    if (parseInt(timeMoment.format("H")) < parseInt(currentTime)) {
+      eventEl.find("textarea").removeClass("future present").addClass("past");
+    } else if (parseInt(timeMoment.format("H")) == parseInt(currentTime)) {
+      eventEl.find("textarea").removeClass("future past").addClass("present");
+    } else {
+      eventEl.find("textarea").removeClass("past present").addClass("future");
+    }
+  }
 };
 
 // Event text was changed
