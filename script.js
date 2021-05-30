@@ -1,4 +1,4 @@
-var savedEvents = [];
+var eventsArr = [];
 var newDay = true;
 
 //Function to initially load the page
@@ -12,25 +12,31 @@ var loadPage = function () {
   //Place day in header
   $("#currentDay").append(day);
 
-  //localStorage.setItem("date", day);
+  //get saved events
+  var savedEvents = JSON.parse(localStorage.getItem("events"));
 
   //Check for the last time the page was loaded
   var dayCheck = localStorage.getItem("date");
 
   //If the page has already been loaded today, set newDay to false and clear localStorage
-  // if (dayCheck !== day) {
-  //   newDay = false;
-  // }
-
-  //eventsArr = localStorage.getItem(events);
+  if (dayCheck === day) {
+    newDay = false;
+    console.log("It is not a new day");
+    //Check to make sure savedEvents is not null
+    if (savedEvents) {
+      eventsArr = savedEvents;
+    }
+  } else {
+    console.log("It is a new day");
+    localStorage.setItem("date", day);
+    localStorage.setItem("events", JSON.stringify([]));
+  }
 
   //load event elements onto page
   var events = $("#schedule").children();
 
   //Get current time
   var currentTime = moment().format("H");
-
-  savedEvents = JSON.parse(localStorage.getItem("events"));
 
   //Loop through elements to add correct color TODO and event description if saved
   for (var i = 0; i < events.length; i++) {
@@ -53,7 +59,7 @@ var loadPage = function () {
     }
 
     //Add saved elements to the text area
-    textBox.text(savedEvents[i]);
+    textBox.text(eventsArr[i]);
   }
 };
 
@@ -75,10 +81,10 @@ $(".event-row").submit(function (event) {
   //Get the correct place to put the event
   var arrPlace = $(this).attr("event-form-id");
 
-  //Set the text in savedEvents
-  savedEvents[arrPlace] = text;
+  //Set the text in eventsArr
+  eventsArr[arrPlace] = text;
 
-  localStorage.setItem("events", JSON.stringify(savedEvents));
+  localStorage.setItem("events", JSON.stringify(eventsArr));
 });
 
 loadPage();
