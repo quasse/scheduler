@@ -21,13 +21,11 @@ var loadPage = function () {
   //If the page has already been loaded today, set newDay to false and clear localStorage
   if (dayCheck === day) {
     newDay = false;
-    console.log("It is not a new day");
     //Check to make sure savedEvents is not null
     if (savedEvents) {
       eventsArr = savedEvents;
     }
   } else {
-    console.log("It is a new day");
     localStorage.setItem("date", day);
     localStorage.setItem("events", JSON.stringify([]));
   }
